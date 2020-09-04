@@ -1,6 +1,50 @@
-// Array: Partition//
-
+// Array: Quick Sort
 // https://opendsa-server.cs.vt.edu/embed/quicksortAV
+// https: //upload.wikimedia.org/wikipedia/commons/6/6a/Sorting_quicksort_anim.gif
+
+// Create a function that uses yesterday’s partition to sort an array in-place.
+
+//   Time Complexity
+//     - Best: O(n log(n))
+//     - Average: O(n log(n))
+//     - Worst: O(n^2)
+
+
+//   Steps:
+// - recursively partition the array
+// - start by partitioning the full array (use the previously built partition algo)
+// - then partition the left side of the array (left of new pivot idx)
+//   and the right side (right of new pivot idx), recursively
+
+
+// [77, 44, 22, 13, 9, 88, 99, 55, 33];
+// [77, 44, 22, 13]
+function quickSort(arr, left = 0, right = arr.length - 1) {
+    if (left >= right) {
+        return;
+    }
+
+    const pivot = PartitionLomuto(arr, left, right);
+
+    quickSort(arr, left, pivot - 1); // [77, 44, 22, 13]
+    quickSort(arr, pivot, right); // [9, 88, 99, 55, 33]
+
+    return arr;
+}
+
+var x = [1, 2, 3];
+var y = x;
+y.push(4)
+
+// x [1,2,3,4]
+// 'pass by reference'
+
+// 'pass by value'
+// number, integers, floats
+
+
+// Array: Partition
+
 // https://www.youtube.com/watch?v=ZZuD6iUe3Pc
 // https://upload.wikimedia.org/wikipedia/commons/8/84/Lomuto_animated.gif
 
@@ -49,11 +93,6 @@ let PartitionLomuto = (arr, left, right) => {
     return i;
 }
 
-let array = [11, 12, 9, 39, 66, 99, 200, 44];
-//                                       P
-//                       i
-//                                       j
-
 // Sir Charles Antony Richard Hoare partitioning scheme
 function partitionHoare(arr, left, right) {
     const pivot = arr[Math.floor((left + right) / 2)];
@@ -79,48 +118,41 @@ function partitionHoare(arr, left, right) {
 // - for now, left will be 0, and right will be the last idx
 // - later these params will be used to specify a sub section of the array to partition
 
-// let arr = [88, 22, 11, 55, 111, 99, 33];
-// partition(arr, 0, arr.length-1);
-
-//group:Joseph Sunderland, Hana Luong,Yunuo Zhou,Justin Clayton
-// Array: Partition
-
-// https://opendsa-server.cs.vt.edu/embed/quicksortAV
-// https://www.youtube.com/watch?v=ZZuD6iUe3Pc
-// https://upload.wikimedia.org/wikipedia/commons/8/84/Lomuto_animated.gif
 
 
-// Steps:
-// 1. Pick an item out of the arr to be your pivot value
-//   - usually the middle item or the last item
-// 2. Partition the array IN PLACE such that all values less than the pivot are to the left of it
-//    and all values greater than the pivot are to the right (not perfectly sorted)
-// 3. return: new idx of the pivot value
+// Radix Sort
+// https://www.cs.usfca.edu/~galles/visualization/RadixSort.html
 
-
-function partition(arr, left, right) {
-    let left = 0;
-    let right = arr.length - 1;
-    var pivot = arr[Math.floor((left + right) / 2)];
-
-    while (left < right) {
-        while (arr[left] < pivot) {
-            left++;
-        }
-        while (arr[right] > pivot) {
-            right--;
-        }
-        if (left < right) {
-            let temp = arr[left];
-            arr[left] = arr[right];
-            arr[right] = temp;
-
-        }
-    }
-    return left;
+// setup
+function getPosition(num, place) {
+    return Math.floor(Math.abs(num) / Math.pow(10, place)) % 10;
 }
 
-//[90, 100, 23, 4, 5, 998, 102, 8, 1000]
-// left = 0, right = 8, pivot = 5  => left = 0, right = 7,
-// Params: arr, left, right    // - for now, left will be 0, and right will be the last idx
-// - later these params will be used to specify a sub section of the array to partition
+// get num with most digits
+function getMax(arr) {
+    let max = 0;
+    for (let num of arr) {
+        if (max < num.toString().length) {
+            max = num.toString().length;
+        }
+    }
+    return max;
+}
+
+// setup
+function radixSort(arr) {
+    const max = getMax(arr); // length of the max digit in the array
+
+    for (let i = 0; i < max; i++) {
+
+        let buckets = Array.from({ length: 10 }, () => []);
+        
+        for (let j = 0; j < arr.length; j++) {
+            buckets[getPosition(arr[j], i)].push(arr[j]); // pushing into buckets
+        }
+        arr = [].concat(...buckets);
+    }
+    return arr;
+}
+
+console.log(radixSort([4, 57, 7, 3, 933])); // [3,4,7,57,933]

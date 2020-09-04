@@ -1,6 +1,44 @@
-// Array: Partition//
+// group 5: Matthew Merrill, Beverly Kwok, Clint Lawson, Ryan Marean
 
+// Array: Quic Sort
 // https://opendsa-server.cs.vt.edu/embed/quicksortAV
+
+// Create a function that uses yesterday’s partition to sort an array in-place.
+
+//   Time Complexity
+//     - Best: O(n log(n))
+//     - Average: O(n log(n))
+//     - Worst: O(n^2)
+
+
+//   Steps:
+// - recursively partition the array
+// - start by partitioning the full array (use the previously built partition algo)
+// - then partition the left side of the array (left of new pivot idx)
+//   and the right side (right of new pivot idx), recursively
+
+// var arrT = [2, 1, 3, 0]
+// quickSort(arrT)
+
+function quickSort(arr, left, right) {
+
+    // - recursively partition the array
+
+    // - start by partitioning the full array (use the previously built partition algo)
+    const pivot = PartitionLomuto(arr, left, right);
+    // - then partition the left side of the array (left of new pivot idx)
+    quickSort(arr, left, pivot);
+    //   and the right side (right of new pivot idx), recursively
+    quickSort(arr, pivot, right);
+
+    return arr;
+
+}
+
+
+
+// Array: Partition
+
 // https://www.youtube.com/watch?v=ZZuD6iUe3Pc
 // https://upload.wikimedia.org/wikipedia/commons/8/84/Lomuto_animated.gif
 
@@ -49,11 +87,6 @@ let PartitionLomuto = (arr, left, right) => {
     return i;
 }
 
-let array = [11, 12, 9, 39, 66, 99, 200, 44];
-//                                       P
-//                       i
-//                                       j
-
 // Sir Charles Antony Richard Hoare partitioning scheme
 function partitionHoare(arr, left, right) {
     const pivot = arr[Math.floor((left + right) / 2)];
@@ -79,48 +112,7 @@ function partitionHoare(arr, left, right) {
 // - for now, left will be 0, and right will be the last idx
 // - later these params will be used to specify a sub section of the array to partition
 
-// let arr = [88, 22, 11, 55, 111, 99, 33];
-// partition(arr, 0, arr.length-1);
-
-//group:Joseph Sunderland, Hana Luong,Yunuo Zhou,Justin Clayton
-// Array: Partition
-
-// https://opendsa-server.cs.vt.edu/embed/quicksortAV
-// https://www.youtube.com/watch?v=ZZuD6iUe3Pc
-// https://upload.wikimedia.org/wikipedia/commons/8/84/Lomuto_animated.gif
 
 
-// Steps:
-// 1. Pick an item out of the arr to be your pivot value
-//   - usually the middle item or the last item
-// 2. Partition the array IN PLACE such that all values less than the pivot are to the left of it
-//    and all values greater than the pivot are to the right (not perfectly sorted)
-// 3. return: new idx of the pivot value
-
-
-function partition(arr, left, right) {
-    let left = 0;
-    let right = arr.length - 1;
-    var pivot = arr[Math.floor((left + right) / 2)];
-
-    while (left < right) {
-        while (arr[left] < pivot) {
-            left++;
-        }
-        while (arr[right] > pivot) {
-            right--;
-        }
-        if (left < right) {
-            let temp = arr[left];
-            arr[left] = arr[right];
-            arr[right] = temp;
-
-        }
-    }
-    return left;
-}
-
-//[90, 100, 23, 4, 5, 998, 102, 8, 1000]
-// left = 0, right = 8, pivot = 5  => left = 0, right = 7,
-// Params: arr, left, right    // - for now, left will be 0, and right will be the last idx
-// - later these params will be used to specify a sub section of the array to partition
+// Radix Sort
+// https://www.cs.usfca.edu/~galles/visualization/RadixSort.html
