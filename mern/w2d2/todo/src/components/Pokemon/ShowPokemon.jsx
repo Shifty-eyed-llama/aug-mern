@@ -17,8 +17,19 @@ const ShowPokemon = ({idx, thisPokemon}) => {
             })
     }
 
+    const talkToStarWars = (url) => {
+        axios.get("")
+            .then(response => {
+                console.log(response);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
     useEffect(() => {
         getOnePokemon(thisPokemon.url);
+        talkToStarWars();
     }, [])
 
     const getPokemonOnClick = (e) => {

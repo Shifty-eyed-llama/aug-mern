@@ -39,6 +39,8 @@ const TodoList = () => {
                 updateTodo={updateTodo}
                 deleteTodo={deleteTodo}
             />
+
+            { bool === highlight ? <Component></Component> : <div></div> }
         </div>
     )
 }
