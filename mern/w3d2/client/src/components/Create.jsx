@@ -18,6 +18,7 @@ const Create = ({addSong}) => {
 
         // serialize an object or pass it into axios.post directly
         const song = {name: name, artist: artist};
+
         axios.post("http://localhost:8000/songs", song)
             .then(res => {
                 // do more stuff

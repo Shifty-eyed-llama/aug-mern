@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import { navigate } from '@reach/router';
 
 
-const Edit = ({id}) => {
+const Edit = ({id, updateSong}) => {
 
     const [name, setName] = useState("");
     const [artist, setArtist] = useState("");
@@ -19,9 +20,23 @@ const Edit = ({id}) => {
             })
     }, [id])
 
+    const formHandler = (e) => {
+        e.preventDefault();
+
+        axios.put(`http://localhost:8000/songs/${id}`, {name: name, artist: artist})
+            .then(res => {
+                console.log(res);
+                updateSong(res.data);
+                navigate("/");
+            })
+            .catch(err => {
+                console.log(err.response);
+            })
+    }
+
     return (
         <div>
-           <form>
+           <form onSubmit={formHandler}>
                 <p>Name:</p>
                  <input
                         type="text"

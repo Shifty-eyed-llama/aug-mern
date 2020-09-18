@@ -10,7 +10,7 @@ module.exports = {
             })
             .catch((err) => {
                 console.log(err);
-                res.json(err);
+                res.status(400).json(err);
             })
     },
     getOne: (req, res) => {
@@ -21,7 +21,7 @@ module.exports = {
             })
             .catch((err) => {
                 console.log(err);
-                res.json(err);
+                res.status(400).json(err);
             })
     },
     delete: (req, res) =>{
@@ -32,18 +32,18 @@ module.exports = {
             })
             .catch((err) => {
                 console.log(err);
-                res.json(err);
+                res.status(400).json(err);
             })
     },
     update: (req, res)=>{
-        Song.updateOne({_id: req.params.id}, req.body)
+        Song.findOneAndUpdate({_id: req.params.id}, req.body, {runValidators: true, new: true})
             .then((song) => {
                 console.log(song);
                 res.json(song);
             })
             .catch((err) => {
                 console.log(err);
-                res.json(err);
+                res.status(400).json(err);
             })
     },
     create: (req, res) => {
