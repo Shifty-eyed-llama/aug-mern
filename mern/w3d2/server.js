@@ -17,4 +17,6 @@ require("./server/config/mongoose");
 require('./server/config/routes')(app);
 
 // listen
-app.listen(port, () => {console.log(`app on port ${port}`)});
+const io = app.listen(port, () => {console.log(`app on port ${port}`)});
+
+module.exports = io;

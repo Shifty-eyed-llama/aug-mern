@@ -4,6 +4,7 @@ const SongSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
+        unique: true,
         minlength: [2, "Your song name must be two characters!"]
     },
     artist: {
